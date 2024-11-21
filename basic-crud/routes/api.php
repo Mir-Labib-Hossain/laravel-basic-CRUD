@@ -11,5 +11,9 @@ Route::get('/user', function (Request $request) {
 
 Route::post('create-employee', [EmployeeController::class, 'store']);
 Route::get('get-employees', [EmployeeController::class, 'getEmployees']);
-Route::put('update-employee', [EmployeeController::class, 'updateEmployee']);
-Route::delete('delete-employee', [EmployeeController::class, 'deleteEmployee']);
+Route::get('/update-employee/{id}', function () {
+    return 'Test Route';
+});
+Route::put('/update-employee/{id}', [EmployeeController::class, 'updateEmployee']);
+
+Route::delete('delete-employee/{id}', [EmployeeController::class, 'deleteEmployee']);

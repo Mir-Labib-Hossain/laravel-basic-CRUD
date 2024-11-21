@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EmployeeRepository\employeeInterface;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -68,8 +69,11 @@ class EmployeeController extends Controller
                 'address' => 'required|string',
                 'phone' => 'required|string'
             ]);
-            $createTable = $this->repositoryinterface->updateEmployee($id, $data);
-            return response()->json(['data' => $createTable]);
+
+            $updateEmployee = $this->repositoryinterface->updateEmployee($id, $data);
+            return response()->json(['data' => $updateEmployee]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Employee not found', 'status' => 404]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'status' => 500]);
         }
@@ -83,6 +87,8 @@ class EmployeeController extends Controller
         try {
             $deleteEmployee = $this->repositoryinterface->deleteEmployee($id);
             return response()->json(['data' => $deleteEmployee]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Employee not found', 'status' => 404]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'status' => 500]);
         }

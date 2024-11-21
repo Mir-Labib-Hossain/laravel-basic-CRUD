@@ -7,6 +7,7 @@ use App\Models\Employee;
 
 class employeeImplementation implements employeeInterface
 {
+
     public function store($data)
     {
         $createTable = Employee::create($data);
@@ -21,13 +22,15 @@ class employeeImplementation implements employeeInterface
 
     public function updateEmployee($id, $data)
     {
-        $updatedEmployee = $id->update($data);
-        return $updatedEmployee;
+        $employee = Employee::findOrFail($id);
+        $employee->update($data);
+        return $employee;
     }
 
     public function deleteEmployee($id)
     {
-        $deletedEmployee = $id->delete();
+        $deletedEmployee = Employee::findOrFail($id);
+        $deletedEmployee->delete();
         return $deletedEmployee;
     }
 }
